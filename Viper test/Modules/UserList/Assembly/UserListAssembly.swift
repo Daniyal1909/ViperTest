@@ -8,32 +8,36 @@
 
 import UIKit
 
-class UserListAssembly {
+final class UserListAssembly {
+    
     static func assembleModule() -> UIViewController {
+        
         guard let navVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UsersNavCont") as? UINavigationController,
-            let vc = navVC.topViewController as? UserListVC else {
+            let view = navVC.topViewController as? UserListVC else {
             return UIViewController()
         }
         
-        let presenter = UserListPresenterImp()
+        let presenter = UserListPresenter()
         
-        let usersService = UsersServiceImp()
+        let usersService = UsersServiceImp(networkLayer: NetworkLayerImp())
         
-        let interactor = InteractorImp(usersService: usersService)
-        interactor.output = presenter
+        let interactor = UserListInteractor(usersService: usersService)
+        interactor.presenter = presenter
         
-        let router = UserListRouter(transition: vc)
+        let router = UserListRouter(transition: view)
         
         
         presenter.router = router
         presenter.interactor = interactor
-        presenter.view = vc
+        presenter.view = view
         
         let dataSource = UserListDataSource()
         dataSource.delegate = presenter
-        vc.dataSource = dataSource
-        vc.output = presenter
+        view.dataSource = dataSource
+        view.presenter = presenter
         
         return navVC
+        
     }
+    
 }

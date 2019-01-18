@@ -8,28 +8,31 @@
 
 import Foundation
 
-class InteractorImp: InteractorInput {
-    
-    // MARK: - private properties
-    private var usersService: UsersService!
+final class UserListInteractor: UserListInteractorInput {
     
     // MARK: - public properties
-    weak var output: InteractorOutput?
+    weak var presenter: UserListInteractorOutput?
+    
+    // MARK: - private properties
+    private let usersService: UsersService!
     
     init(usersService: UsersService) {
         self.usersService = usersService
     }
     
-    //MARK: - InteractorInput
+    //MARK: - UserListInteractorInput
     func getUsers() {
-        usersService.getList { (result) in
+        usersService.getList { [weak self] (result) in
             
-            DispatchQueue.main.async {
+            guard let `self` = self else { return }
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
                 switch result {
-                case .success(let value):
-                    self.output?.didSuccessGetUsers(with: value)
+                case .success(let users):
+                    self.presenter?.didSuccessGetUsers(with: users)
                 case .failure(let error):
-                    self.output?.didFailureGetUsers(with: error)
+                    self.presenter?.didFailureGetUsers(with: error)
                 }
             }
             

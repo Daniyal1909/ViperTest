@@ -9,5 +9,5 @@
 import Foundation
 
 protocol NetworkLayer {
-    func request<T: Decodable>(url: URL, completion: @escaping (Result<T>) -> Void)
+    func request<T: Decodable>(api: Api, completion: @escaping (Result<T>) -> Void)
 }

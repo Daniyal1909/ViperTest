@@ -6,8 +6,6 @@
 //  Copyright © 2019 Деветов Даниял. All rights reserved.
 //
 
-import Foundation
-
 protocol UserListDataSourceOutput: class {
     func didSelect(user: User)
 }

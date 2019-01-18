@@ -8,26 +8,29 @@
 
 import Foundation
 
-class UserDeteiledPresenter {
+final class UserDetailedPresenter {
     
     // MARK: - public properties
-    weak var view: UserDeteiledViewInput?
-    var interactor: UserDeteiledInteractorInput?
-    var userURL: URL?
+    weak var view: UserDetailedViewInput?
+    var interactor: UserDetailedInteractorInput?
+    
+    // MARK: - private properties
+    private var userLogin: String
+    
+    // MARK: - init
+    init(userLogin: String) {
+        self.userLogin = userLogin
+    }
     
     // MARK: - private methods
     private func getUserInfo() {
-        if userURL != nil {
-            view?.showLoading()
-            interactor?.getUserInfo(url: userURL!)
-        } else {
-            view?.showError(with: "Не корректный адрес пользователя", action: nil)
-        }
+        view?.showLoading()
+        interactor?.getUserInfo(login: userLogin)
     }
 }
 
-// MARK: - UserDeteiledViewOutput
-extension UserDeteiledPresenter: UserDeteiledViewOutput {
+// MARK: - UserDetailedViewOutput
+extension UserDetailedPresenter: UserDetailedViewOutput {
     
     func viewIsReady() {
         getUserInfo()
@@ -36,9 +39,9 @@ extension UserDeteiledPresenter: UserDeteiledViewOutput {
 }
 
 // MARK: - UserDeteiledInteractorOutput
-extension UserDeteiledPresenter: UserDeteiledInteractorOutput {
+extension UserDetailedPresenter: UserDetailedInteractorOutput {
     
-    func didSuccessGetUserInfo(user: UserDeteiledPresentation) {
+    func didSuccessGetUserInfo(user: UserDetails) {
         view?.hideLoading()
         view?.setUserInfo(with: user)
     }

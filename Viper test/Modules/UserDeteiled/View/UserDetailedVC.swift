@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserDeteiledVC: UIViewController {
+final class UserDetailedVC: UIViewController {
     
     // MARK: - IBOutlets
     @IBOutlet weak var avatarImage: UIImageView!
@@ -20,17 +20,17 @@ class UserDeteiledVC: UIViewController {
     @IBOutlet weak var loadingView: UIView!
     
     // MARK: - public properties
-    var output: UserDeteiledViewOutput?
+    var presenter: UserDetailedViewOutput?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        output?.viewIsReady()
+        presenter?.viewIsReady()
     }
     
 }
 
 // MARK: - UserDeteiledInput
-extension UserDeteiledVC: UserDeteiledViewInput {
+extension UserDetailedVC: UserDetailedViewInput {
     func showLoading() {
         loadingView.isHidden = false
     }
@@ -39,23 +39,23 @@ extension UserDeteiledVC: UserDeteiledViewInput {
         loadingView.isHidden = true
     }
     
-    func setUserInfo(with user: UserDeteiledPresentation) {
+    func setUserInfo(with user: UserDetails) {
         loginLabel.text = user.login
         fullNameLabel.text = user.fullName
-        avatarImage.image = user.avatar
+        avatarImage.sd_setImage(with: user.avatar, completed: nil)
         // QUESTION: Нужно ли как то выносить такую логику из VC, если да то как?
-        if user.location != nil {
-            locationLabel.text = "Location: \(user.location ?? "")"
+        if let location = user.location {
+            locationLabel.text = "Location: \(location)"
         } else {
             locationLabel.isHidden = true
         }
-        if user.company != nil {
-            companyLabel.text = "Company: \(user.company ?? "")"
+        if let company = user.company {
+            companyLabel.text = "Company: \(company)"
         } else {
             companyLabel.isHidden = true
         }
-        if user.email != nil {
-            emailLabel.text = "Email: \(user.email ?? "")"
+        if let email = user.email {
+            emailLabel.text = "Email: \(email)"
         } else {
             emailLabel.isHidden = true
         }
@@ -67,7 +67,7 @@ extension UserDeteiledVC: UserDeteiledViewInput {
         alert.addAction(UIAlertAction(title: "Повторить попытку", style: .destructive, handler: { (_) in
             action?()
         }))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
 }

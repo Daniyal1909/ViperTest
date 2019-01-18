@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserListDataSource: NSObject {
+final class UserListDataSource: NSObject {
     
     // MARK: - private propeties
     private var items: [User] = []
@@ -17,6 +17,7 @@ class UserListDataSource: NSObject {
     weak var tableView: UITableView?
     weak var delegate: UserListDataSourceOutput?
     
+    // MARK: - Methods
     func reloadTable(with items: [User]) {
         self.items = items
         tableView?.reloadData()
@@ -32,7 +33,7 @@ extension UserListDataSource: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? UserCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserCell.className, for: indexPath) as? UserCell else { return UITableViewCell() }
         cell.setup(items[indexPath.row])
         return cell
     }

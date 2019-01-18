@@ -1,5 +1,5 @@
 //
-//  UserDeteiledViewOutput.swift
+//  UserDetailedInteractorInput.swift
 //  Viper test
 //
 //  Created by Деветов Даниял on 16/01/2019.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol UserDeteiledViewOutput {
-    func viewIsReady()
+protocol UserDetailedInteractorInput {
+    func getUserInfo(login: String)
 }

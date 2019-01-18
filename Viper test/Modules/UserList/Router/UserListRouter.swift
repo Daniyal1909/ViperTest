@@ -8,12 +8,12 @@
 
 import UIKit
 
-class UserListRouter {
+final class UserListRouter {
     
     // MARK: - private properties
-    
     private weak var transition: UIViewController?
     
+    // MARK: - Init
     init(transition: UIViewController) {
         self.transition = transition
     }
@@ -24,7 +24,8 @@ class UserListRouter {
 extension UserListRouter: UserListRouterInput {
     
     func openDeteled(with user: User) {
-        let vc = AssembleUserDeteiled.assemble(userURL: user.url)
+        let model = UserDetailsAssembly.Model(userLogin: user.login)
+        let vc = UserDetailsAssembly.assemble(model: model)
         transition?.navigationController?.pushViewController(vc, animated: true)
     }
     

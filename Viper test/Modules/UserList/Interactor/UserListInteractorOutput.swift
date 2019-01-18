@@ -6,9 +6,7 @@
 //  Copyright © 2019 Деветов Даниял. All rights reserved.
 //
 
-import Foundation
-
-protocol InteractorOutput: class {
+protocol UserListInteractorOutput: class {
     func didSuccessGetUsers(with users: [User])
     func didFailureGetUsers(with error: Error)
 }

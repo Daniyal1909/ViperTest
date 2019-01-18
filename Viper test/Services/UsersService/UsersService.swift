@@ -10,5 +10,5 @@ import Foundation
 
 protocol UsersService {
     func getList(completion: @escaping (Result<[User]>) -> Void)
-    func getDeteiled(url: URL,completion: @escaping (Result<UserDeteiled>) -> Void)
+    func getDetails(login: String, completion: @escaping (Result<UserDetails>) -> Void)
 }

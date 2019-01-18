@@ -6,9 +6,7 @@
 //  Copyright © 2019 Деветов Даниял. All rights reserved.
 //
 
-import Foundation
-
-protocol ViewInput: AnyObject {
+protocol UserListViewInput: class {
     func setUsers(_ users: [User])
     func showLoading()
     func hideLoading()

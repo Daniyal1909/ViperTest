@@ -9,18 +9,21 @@
 import Foundation
 
 // MARK: - UsersService
-// QUESTION: Нужно ли здесь маркировать наследование по протоколу
-class UsersServiceImp: UsersService {
+final class UsersServiceImp: UsersService {
     
     // MARK: - private properties
-    // QUESTION: нужно прописывать зависимость в Assembly?
-    private let networkLayer: NetworkLayer = NetworkLayerImp()
+    private let networkLayer: NetworkLayer
     
-    func getList(completion: @escaping (Result<[User]>) -> Void) {
-        networkLayer.request(url: URL(string: "https://api.github.com/users")!, completion: completion)
+    init(networkLayer: NetworkLayer) {
+        self.networkLayer = networkLayer
     }
     
-    func getDeteiled(url: URL,completion: @escaping (Result<UserDeteiled>) -> Void) {
-        networkLayer.request(url: url, completion: completion)
+    func getList(completion: @escaping (Result<[User]>) -> Void) {
+        networkLayer.request(api: Api.userList, completion: completion)
+    }
+    
+    func getDetails(login: String,completion: @escaping (Result<UserDetails>) -> Void) {
+        let api = Api.deteils(login: login)
+        networkLayer.request(api: api, completion: completion)
     }
 }

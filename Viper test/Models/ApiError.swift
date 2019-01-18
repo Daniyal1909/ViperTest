@@ -10,4 +10,14 @@ import Foundation
 
 enum ApiError: Error {
     case badRequest
+    case parsing
+}
+
+extension ApiError {
+    var localizedDescription: String {
+        switch self {
+        case .badRequest: return "Bad request"
+        case .parsing: return "Упс, плохой программист"
+        }
+    }
 }

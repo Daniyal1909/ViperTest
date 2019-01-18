@@ -6,9 +6,7 @@
 //  Copyright © 2019 Деветов Даниял. All rights reserved.
 //
 
-import Foundation
-
-protocol UserDeteiledInteractorOutput: class {
-    func didSuccessGetUserInfo(user: UserDeteiledPresentation)
+protocol UserDetailedInteractorOutput: class {
+    func didSuccessGetUserInfo(user: UserDetails)
     func didFailureGetUserInfo(error: Error)
 }

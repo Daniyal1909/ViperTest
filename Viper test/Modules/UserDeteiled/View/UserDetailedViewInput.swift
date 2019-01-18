@@ -6,11 +6,9 @@
 //  Copyright © 2019 Деветов Даниял. All rights reserved.
 //
 
-import Foundation
-
-protocol UserDeteiledViewInput: class {
+protocol UserDetailedViewInput: class {
     func showLoading()
     func hideLoading()
-    func setUserInfo(with user: UserDeteiledPresentation)
+    func setUserInfo(with user: UserDetails)
     func showError(with message: String, action: (() -> Void)?)
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserListVC: UIViewController {
+final class UserListVC: UIViewController {
     
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -16,27 +16,29 @@ class UserListVC: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     
     // MARK: - public properties
-    var dataSource: UserListDataSource!
-    var output: ViewOutput!
+    var dataSource: UserListDataSource?
+    var presenter: UserListViewOutput?
 
     // MARK: - view lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setDataSource()
-        output.viewIsReady()
+        presenter?.viewIsReady()
     }
     
-    func setDataSource() {
-        self.dataSource.tableView = tableView
+    // MARK: - private Methods
+    private func setDataSource() {
+        dataSource?.tableView = tableView
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
     }
 }
 
-// MARK: - ViewInput
-extension UserListVC: ViewInput {
+// MARK: - UserListViewInput
+extension UserListVC: UserListViewInput {
+    
     func setUsers(_ users: [User]) {
-        dataSource.reloadTable(with: users)
+        dataSource?.reloadTable(with: users)
     }
     
     func showLoading() {
@@ -58,5 +60,6 @@ extension UserListVC: ViewInput {
         errorLabel.isHidden = false
         errorLabel.text = message
     }
+    
 }
 

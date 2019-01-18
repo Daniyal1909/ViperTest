@@ -7,32 +7,24 @@
 //
 
 import UIKit
+import SDWebImage
 
-class UserCell: UITableViewCell {
+final class UserCell: UITableViewCell {
     
     // MARK: - IBOutlets
     @IBOutlet weak var loginLabel: UILabel!
-    @IBOutlet weak var avatarImage: UIImageView!
+    @IBOutlet weak var avatarImageView: UIImageView!
     
+    // MARK: - Methods
     func setup(_ model: User) {
         loginLabel.text = model.login
-        DispatchQueue.global(qos: .background).async {
-            do {
-                let data = try Data(contentsOf: model.avatar)
-                let image = UIImage(data: data)
-                DispatchQueue.main.async {
-                    self.avatarImage.image = image
-                }
-            } catch {
-                assertionFailure()
-            }
-        }
+        avatarImageView.sd_setImage(with: model.avatar, completed: nil)
     }
     
     // MARK: - cell lifecycle
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        avatarImage.image = nil
+        avatarImageView.image = nil
     }
 }

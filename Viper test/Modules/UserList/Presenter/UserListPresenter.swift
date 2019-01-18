@@ -6,21 +6,18 @@
 //  Copyright © 2019 Деветов Даниял. All rights reserved.
 //
 
-import Foundation
-
-class UserListPresenterImp {
+final class UserListPresenter {
     
     // MARK: - Public properties
-    
-    weak var view: ViewInput?
+    weak var view: UserListViewInput?
     var router: UserListRouterInput?
-    var interactor: InteractorInput?
+    var interactor: UserListInteractorInput?
     
 }
 
 
-// MARK: - ViewOutput
-extension UserListPresenterImp: ViewOutput {
+// MARK: - UserListViewOutput
+extension UserListPresenter: UserListViewOutput {
     
     func viewIsReady() {
         view?.showLoading()
@@ -29,8 +26,8 @@ extension UserListPresenterImp: ViewOutput {
     
 }
 
-// MARK: - InteractorOutput
-extension UserListPresenterImp: InteractorOutput {
+// MARK: - UserListInteractorOutput
+extension UserListPresenter: UserListInteractorOutput {
     
     func didSuccessGetUsers(with users: [User]) {
         view?.hideLoading()
@@ -44,7 +41,7 @@ extension UserListPresenterImp: InteractorOutput {
 }
 
 // MARK: - UserListDataSourceOutput
-extension UserListPresenterImp: UserListDataSourceOutput {
+extension UserListPresenter: UserListDataSourceOutput {
     
     func didSelect(user: User) {
         router?.openDeteled(with: user)
